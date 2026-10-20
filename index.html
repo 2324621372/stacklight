@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101525">
+  <meta name="description" content="叠光记：稳住光，叠到天边。免费的竖屏叠塔小游戏。">
+  <title>叠光记 · Stacklight</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+  <main id="app">
+    <header class="masthead"><a href="#" id="brand">◈ <span>叠光记</span></a><span>STACKLIGHT <i> / </i> 一场关于光的练习</span><button id="sound" class="icon-button" aria-label="切换声音">♫</button></header>
+    <section id="home" class="home">
+      <div class="intro"><p class="eyebrow">A LITTLE LIGHT, A LITTLE HIGHER</p><h1>叠光记<span>稳住光，<br>叠到天边。</span></h1><p class="description">把每一束微光，叠成自己的星塔。<br>在风来之前，找到恰好的平衡。</p><div class="color-dots"><i></i><i></i><i></i><i></i><span>四种光色 · 无限可能</span></div></div>
+      <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="moon"></div><div class="art-line"></div><div class="art-tower"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="art-caption">让微光，有处安放</span></div>
+      <div class="home-actions"><div class="record"><span>PERSONAL BEST / 最高光分</span><strong id="best">0000</strong><p id="record-note"></p></div><button id="start" class="primary">开始游戏 <span>↗</span></button><button id="daily" class="secondary">今日光题 <span>每日一束新的光 ↗</span></button><div class="home-links"><button id="gallery">◇ 图鉴</button><button id="settings">⚙ 设置</button><button id="help">? 玩法</button></div></div>
+      <footer><span>无需赶路，慢慢发光。</span><span>戴上耳机，听见光落下的声音 <i>✦</i></span></footer>
+    </section>
+    <section id="game" class="hidden">
+      <div class="game-heading"><div><p class="eyebrow" id="mode-label">CLASSIC / 经典模式</p><h2>把光，留在这里。</h2></div><button id="pause" class="icon-button" aria-label="暂停">Ⅱ</button></div>
+      <div class="play-layout"><aside class="game-aside"><p class="eyebrow">YOUR LIGHT</p><strong id="score">0</strong><span>本局光分</span><div class="aside-rule"></div><p>不必每一次都完美。<br>同色相遇，<br>也能让塔轻一点。</p><p class="keyboard-help">← → 调整位置<br>空格 / ↓ 落下<br>P 暂停 · E 使用道具</p></aside>
+      <div class="board-wrap"><div class="board-top"><span id="height">0 层</span><span id="storm">下一场风暴 45s</span><span id="next">下一束 <i></i></span></div><canvas id="board" width="420" height="600" aria-label="光塔游戏区域，左右滑动调整，点击落下" tabindex="0"></canvas><div id="toast" role="status" aria-live="polite"></div><div class="balance"><div><span>重心偏移</span><span id="balance-value">0%</span></div><div class="balance-track"><i id="balance-bar"></i></div></div><div class="controls"><button id="left" aria-label="向左移动">←</button><button id="drop" class="primary">落下一束光 <span>↓</span></button><button id="right" aria-label="向右移动">→</button></div><button id="use-item" class="item-button"></button></div>
+      <aside class="game-aside right-aside"><p class="eyebrow">THE LITTLE THINGS</p><div class="small-stat"><span>最高高度</span><b id="max-height">0 层</b></div><div class="small-stat"><span>连光</span><b id="combo">×0</b></div><div class="small-stat"><span>撑过风暴</span><b id="storms">0 次</b></div><p id="challenge-note"></p></aside></div>
+    </section>
+  </main>
+  <dialog id="modal"><div id="modal-content"></div></dialog>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

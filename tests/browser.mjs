@@ -1,0 +1,50 @@
+import { chromium } from '@playwright/test';
+import assert from 'node:assert/strict';
+import { mkdir } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+const browser = await chromium.launch({ channel: 'msedge', headless: true });
+const errors = [];
+try {
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  page.on('pageerror', e => errors.push(e.message));
+  page.on('response', r => { if (r.status() >= 400) errors.push(`${r.status()} ${r.url()}`); });
+  await page.goto(process.env.TEST_URL || 'http://localhost:4173/');
+  await page.waitForFunction(() => document.getElementById('record-note').textContent.length > 0);
+  await mkdir(new URL('../test-results/', import.meta.url), { recursive: true });
+  await page.screenshot({ path: new URL('../test-results/home-desktop.png', import.meta.url).pathname.replace(/^\/(\w:)/, '$1'), fullPage: true });
+  await page.getByRole('button', { name: '开始游戏' }).click();
+  await page.locator('[data-item="steady"]').click();
+  for (let i = 0; i < 2; i++) await page.locator('#tutorial-next').click();
+  await page.locator('#tutorial-next').click();
+  await page.locator('#drop').click();
+  await page.waitForFunction(() => Number(document.getElementById('score').textContent) > 0);
+  await page.locator('#pause').click();
+  const pausedScore = await page.locator('#score').textContent();
+  await page.waitForTimeout(600);
+  assert.equal(await page.locator('#score').textContent(), pausedScore);
+  await page.locator('#resume').click();
+  await page.locator('#use-item').click();
+  assert.ok(await page.locator('#use-item').isDisabled());
+  await page.locator('#pause').click(); await page.locator('#quit').click();
+  assert.ok(Number(await page.locator('.result-score').innerText().then(t => t.replace(/\D/g, ''))) > 0);
+  await page.locator('#result-home').click(); await page.reload();
+  await page.waitForFunction(() => Number(document.getElementById('best').textContent) > 0);
+  await page.locator('#gallery').click(); assert.match(await page.locator('#modal-content').innerText(), /初光/); await page.locator('#close-modal').click();
+  await page.locator('#settings').click(); await page.locator('[data-setting="bgm"]').check(); await page.locator('#close-modal').click();
+  await page.locator('#daily').click(); assert.match(await page.locator('#modal-content').innerText(), /今日光题/); await page.locator('#close-modal').click();
+  for (const viewport of [{ width: 390, height: 844 }, { width: 360, height: 640 }, { width: 844, height: 390 }]) {
+    await page.setViewportSize(viewport);
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'no horizontal overflow');
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.screenshot({ path: new URL('../test-results/home-mobile.png', import.meta.url).pathname.replace(/^\/(\w:)/, '$1'), fullPage: true });
+  await page.locator('#start').click(); await page.locator('[data-item="slow_fall"]').click();
+  await page.locator('#use-item').click(); await page.locator('#drop').click();
+  await page.waitForTimeout(700); assert.equal(await page.locator('#score').textContent(), '0', 'feather slows drop');
+  await page.waitForFunction(() => Number(document.getElementById('score').textContent) > 0);
+  const box = await page.locator('#board').boundingBox();
+  await page.mouse.move(box.x + box.width / 2, box.y + 100); await page.mouse.down(); await page.mouse.move(box.x + box.width / 2 + 40, box.y + 100, { steps: 5 }); await page.mouse.up();
+  await page.screenshot({ path: new URL('../test-results/game-mobile.png', import.meta.url).pathname.replace(/^\/(\w:)/, '$1'), fullPage: true });
+  assert.deepEqual(errors, []);
+  console.log('Browser checks passed: desktop/mobile, tutorial, landing, pause, items, persistence, gallery, settings, daily, drag, slow fall; no page or resource errors.');
+} finally { await browser.close(); }

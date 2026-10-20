@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "game": "叠光记",
+    "game_en": "Stacklight",
+    "version": "1.0",
+    "locale": "zh-CN"
+  },
+  "app": {
+    "title": "叠光记",
+    "subtitle": "稳住光，叠到天边"
+  },
+  "menu": {
+    "start": "开始游戏",
+    "daily": "每日挑战",
+    "gallery": "图鉴",
+    "settings": "设置",
+    "no_record": "还没有最高纪录，来叠第一座光塔吧"
+  },
+  "tutorial": {
+    "step1_title": "移动与落下",
+    "step1_body": "左右调整位置，点击屏幕让光块落下。",
+    "step2_title": "同色相连",
+    "step2_body": "同色相邻会消掉一层，消得越多，风暴越晚来。",
+    "step3_title": "注意失衡",
+    "step3_body": "塔歪了会晃。稳住重心，比单纯冲高更重要。",
+    "skip": "跳过",
+    "next": "下一步",
+    "start": "开始叠塔"
+  },
+  "hud": {
+    "score": "光分 {0}",
+    "height": "{0} 层",
+    "combo": "×{0} 连光",
+    "imbalance": "重心偏移",
+    "storm_warn": "风暴将至…",
+    "storm_active": "风暴中！抓住节奏",
+    "pause": "暂停",
+    "resume": "继续",
+    "quit": "放弃本局"
+  },
+  "items": {
+    "steady": {
+      "name": "稳心石",
+      "desc": "立刻清空失衡条"
+    },
+    "clear_dark": {
+      "name": "破暗镜",
+      "desc": "下次黑暗风暴无效"
+    },
+    "slow_fall": {
+      "name": "缓落羽",
+      "desc": "下一块下落变慢 3 秒"
+    },
+    "obtained": "获得「{0}」——用在最晃的那一刻。"
+  },
+  "daily": {
+    "title": "今日光题",
+    "done": "今日课题已点亮",
+    "tomorrow": "明天还有新的光",
+    "pool": [
+      "只有蓝与金两种色，叠到 25 层",
+      "风暴提前 30%，撑过 3 次",
+      "禁止使用道具，冲击高分"
+    ]
+  },
+  "result": {
+    "titles": {
+      "normal": "光塔熄灭了",
+      "good": "这座塔，记得你",
+      "great": "风暴也没吹倒你",
+      "best": "今夜最亮的一座"
+    },
+    "height": "高度",
+    "max_combo": "最高连消",
+    "storms_survived": "撑过风暴",
+    "score": "本局光分",
+    "new_record": "新纪录！光分 {0}",
+    "retry": "再来一局",
+    "share": "分享成绩",
+    "home": "回主页"
+  },
+  "fail": {
+    "imbalance": "重心散了，光也散了",
+    "ceiling": "太高了，也太险了",
+    "storm": "风比你更快一步"
+  },
+  "gallery": {
+    "first_run": { "name": "初光", "desc": "完成第一局" },
+    "against_wind": { "name": "逆风者", "desc": "风暴中成功落下 10 块" },
+    "stable_master": { "name": "稳塔师", "desc": "失衡未过半且撑过 3 次风暴" },
+    "combo_light": { "name": "连光", "desc": "单局达成高连消" }
+  },
+  "settings": {
+    "sfx": "音效",
+    "bgm": "音乐",
+    "vibration": "振动",
+    "skip_tutorial": "跳过教程"
+  }
+}
