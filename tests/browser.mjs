@@ -11,7 +11,7 @@ try {
   await page.goto(process.env.TEST_URL || 'http://localhost:4173/');
   await page.waitForFunction(() => document.getElementById('record-note').textContent.length > 0);
   await mkdir(new URL('../test-results/', import.meta.url), { recursive: true });
-  await page.screenshot({ path: new URL('../test-results/home-desktop.png', import.meta.url).pathname.replace(/^\/(\w:)/, '$1'), fullPage: true });
+  await page.screenshot({ path: fileURLToPath(new URL('../test-results/home-desktop.png', import.meta.url)), fullPage: true });
   await page.getByRole('button', { name: '开始游戏' }).click();
   await page.locator('[data-item="steady"]').click();
   for (let i = 0; i < 2; i++) await page.locator('#tutorial-next').click();
@@ -37,14 +37,14 @@ try {
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'no horizontal overflow');
   }
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.screenshot({ path: new URL('../test-results/home-mobile.png', import.meta.url).pathname.replace(/^\/(\w:)/, '$1'), fullPage: true });
+  await page.screenshot({ path: fileURLToPath(new URL('../test-results/home-mobile.png', import.meta.url)), fullPage: true });
   await page.locator('#start').click(); await page.locator('[data-item="slow_fall"]').click();
   await page.locator('#use-item').click(); await page.locator('#drop').click();
   await page.waitForTimeout(700); assert.equal(await page.locator('#score').textContent(), '0', 'feather slows drop');
   await page.waitForFunction(() => Number(document.getElementById('score').textContent) > 0);
   const box = await page.locator('#board').boundingBox();
   await page.mouse.move(box.x + box.width / 2, box.y + 100); await page.mouse.down(); await page.mouse.move(box.x + box.width / 2 + 40, box.y + 100, { steps: 5 }); await page.mouse.up();
-  await page.screenshot({ path: new URL('../test-results/game-mobile.png', import.meta.url).pathname.replace(/^\/(\w:)/, '$1'), fullPage: true });
+  await page.screenshot({ path: fileURLToPath(new URL('../test-results/game-mobile.png', import.meta.url)), fullPage: true });
   assert.deepEqual(errors, []);
   console.log('Browser checks passed: desktop/mobile, tutorial, landing, pause, items, persistence, gallery, settings, daily, drag, slow fall; no page or resource errors.');
 } finally { await browser.close(); }
